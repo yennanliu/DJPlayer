@@ -170,7 +170,9 @@ export default {
       required: true
     },
     audioContext: {
-      type: Object,
+      validator: function (value) {
+        return value === null || value instanceof AudioContext || value instanceof (window.webkitAudioContext || AudioContext)
+      },
       default: null
     },
     deckVolume: {
@@ -226,10 +228,23 @@ export default {
       if (!this.audioContext) return
 
       try {
+        // Clean up existing nodes
+        if (this.gainNode) {
+          this.gainNode.disconnect()
+        }
+        if (this.analyserNode) {
+          this.analyserNode.disconnect()
+        }
+        
+        // Create new nodes
         this.gainNode = this.audioContext.createGain()
         this.analyserNode = this.audioContext.createAnalyser()
         
+        // Configure analyser
         this.analyserNode.fftSize = 256
+        this.analyserNode.smoothingTimeConstant = 0.8
+        
+        // Connect audio graph: analyser -> gain -> destination
         this.analyserNode.connect(this.gainNode)
         this.gainNode.connect(this.audioContext.destination)
         
@@ -244,12 +259,31 @@ export default {
       if (!file) return
 
       this.isLoading = true
+      
+      // Clean up previous audio element
+      if (this.audioElement) {
+        this.audioElement.pause()
+        this.audioElement.src = ''
+        this.audioElement = null
+      }
+      
+      // Clean up previous source node
+      if (this.sourceNode) {
+        this.sourceNode.disconnect()
+        this.sourceNode = null
+      }
+
       const url = URL.createObjectURL(file)
       
       this.audioElement = new Audio(url)
       this.audioElement.crossOrigin = 'anonymous'
       
       this.audioElement.addEventListener('loadedmetadata', () => {
+        // Ensure audio context is running
+        if (this.audioContext && this.audioContext.state === 'suspended') {
+          this.audioContext.resume()
+        }
+        
         this.connectAudioSource()
         this.$emit('file-loaded', {
           name: file.name,
@@ -267,21 +301,35 @@ export default {
         this.$emit('play-pause')
       })
 
+      this.audioElement.addEventListener('error', (e) => {
+        console.error('Audio element error:', e)
+        this.isLoading = false
+      })
+
       this.audioElement.load()
     },
 
     connectAudioSource() {
-      if (!this.audioContext || !this.audioElement) return
+      if (!this.audioContext || !this.audioElement || !this.analyserNode) return
 
       try {
+        // Disconnect previous source if it exists
         if (this.sourceNode) {
           this.sourceNode.disconnect()
+          this.sourceNode = null
         }
         
+        // Create new media element source
         this.sourceNode = this.audioContext.createMediaElementSource(this.audioElement)
         this.sourceNode.connect(this.analyserNode)
       } catch (error) {
-        console.error('Error connecting audio source:', error)
+        // If we get an error about the element already being used, that's okay
+        // It might already be connected in some browsers
+        if (error.name === 'InvalidStateError') {
+          console.warn('Audio element already has a source node, skipping connection')
+        } else {
+          console.error('Error connecting audio source:', error)
+        }
       }
     },
 
