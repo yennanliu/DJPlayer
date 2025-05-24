@@ -63,6 +63,13 @@ A modern, feature-rich DJ Player built with Vue 2 that allows you to mix tracks 
 
 ## 🎮 How to Use
 
+### Getting Sample Tracks
+1. **Generate Test Tracks**: Use the built-in Sample Track Generator to create test audio files
+   - Choose from preset tracks (Bass Drop, Synth Lead, Drum Beats, etc.)
+   - Or create custom tracks with your own parameters
+   - Download the generated WAV files to your computer
+2. **Use Real Music**: Check the `public/samples/README.md` for free music resources
+
 ### Loading Tracks
 1. Click the "📁 Load Track" button on either Deck A or Deck B
 2. Select an audio file from your computer (MP3, WAV, OGG formats supported)

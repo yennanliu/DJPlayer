@@ -6,6 +6,7 @@
     </header>
     
     <main class="main-content">
+      <SampleTracks @track-generated="onTrackGenerated" />
       <DJPlayer />
     </main>
     
@@ -17,11 +18,19 @@
 
 <script>
 import DJPlayer from './components/DJPlayer.vue'
+import SampleTracks from './components/SampleTracks.vue'
 
 export default {
   name: 'App',
   components: {
-    DJPlayer
+    DJPlayer,
+    SampleTracks
+  },
+  methods: {
+    onTrackGenerated(trackInfo) {
+      console.log('Track generated:', trackInfo)
+      // You can add a notification or feedback here
+    }
   }
 }
 </script>
