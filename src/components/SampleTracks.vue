@@ -202,11 +202,15 @@ export default {
 
 <style scoped>
 .sample-tracks {
-  background: rgba(0, 0, 0, 0.7);
-  border-radius: 15px;
-  padding: 2rem;
-  margin-bottom: 2rem;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: linear-gradient(145deg, #0a0a0a, #1a1a1a);
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin-top: 3rem;
+  margin-bottom: 1rem;
+  border: 1px solid #333;
+  box-shadow: 
+    0 -4px 20px rgba(0, 0, 0, 0.6),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
 }
 
 .sample-header {
@@ -215,11 +219,12 @@ export default {
 }
 
 .sample-title {
-  color: #fff;
+  color: #00ff88;
   font-family: 'Orbitron', monospace;
   font-weight: 700;
-  font-size: 1.5rem;
+  font-size: 1.2rem;
   margin-bottom: 0.5rem;
+  text-shadow: 0 0 10px rgba(0, 255, 136, 0.3);
 }
 
 .sample-subtitle {
@@ -236,11 +241,11 @@ export default {
 }
 
 .sample-card {
-  background: linear-gradient(145deg, #1a202c, #2d3748);
-  border-radius: 10px;
-  padding: 1.5rem;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  transition: transform 0.3s ease;
+  background: linear-gradient(145deg, #0d1117, #1a1a1a);
+  border-radius: 6px;
+  padding: 1rem;
+  border: 1px solid #333;
+  transition: all 0.3s ease;
 }
 
 .sample-card:hover {
@@ -252,9 +257,9 @@ export default {
 }
 
 .track-name {
-  color: #4ecdc4;
+  color: #00ff88;
   font-family: 'Orbitron', monospace;
-  font-size: 1.1rem;
+  font-size: 1rem;
   margin-bottom: 0.5rem;
 }
 
@@ -284,18 +289,21 @@ export default {
 }
 
 .generate-btn {
-  background: linear-gradient(45deg, #667eea, #764ba2);
-  color: white;
+  background: linear-gradient(45deg, #00ff88, #00d4aa);
+  color: #000;
   border: none;
   padding: 0.5rem 1rem;
-  border-radius: 8px;
+  border-radius: 4px;
   cursor: pointer;
-  font-weight: 500;
+  font-weight: 600;
   transition: all 0.3s ease;
   display: flex;
   align-items: center;
   gap: 0.5rem;
   margin: 0 auto;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-size: 0.8rem;
 }
 
 .generate-btn:hover:not(:disabled) {

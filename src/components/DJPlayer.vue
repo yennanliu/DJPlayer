@@ -172,8 +172,8 @@ export default {
       ctx.fillRect(0, 0, width, height)
 
       // Draw waveform for both decks
-      this.drawWaveform(ctx, this.analyserA, 0, width / 2, height, '#ff6b6b')
-      this.drawWaveform(ctx, this.analyserB, width / 2, width / 2, height, '#4ecdc4')
+      this.drawWaveform(ctx, this.analyserA, 0, width / 2, height, '#ff4757')
+      this.drawWaveform(ctx, this.analyserB, width / 2, width / 2, height, '#00ff88')
 
       this.animationId = requestAnimationFrame(this.drawVisualizer)
     },
@@ -257,12 +257,15 @@ export default {
 
 <style scoped>
 .dj-player {
-  background: rgba(0, 0, 0, 0.8);
-  border-radius: 20px;
+  background: linear-gradient(145deg, #1a1a1a, #2d2d2d);
+  border-radius: 12px;
   padding: 2rem;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 
+    0 8px 32px rgba(0, 0, 0, 0.6),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1),
+    0 0 0 1px rgba(0, 255, 136, 0.2);
+  border: 1px solid #333;
+  margin: 2rem 0;
 }
 
 .mixer-section {
@@ -272,11 +275,13 @@ export default {
 }
 
 .mixer-panel {
-  background: linear-gradient(145deg, #2d3748, #4a5568);
-  border-radius: 15px;
+  background: linear-gradient(145deg, #0d1117, #1a1a1a);
+  border-radius: 8px;
   padding: 1.5rem;
-  box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.3);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 
+    inset 0 2px 10px rgba(0, 0, 0, 0.7),
+    0 0 0 1px rgba(0, 255, 136, 0.3);
+  border: 1px solid #333;
   display: flex;
   align-items: center;
   gap: 2rem;
@@ -304,11 +309,12 @@ export default {
 
 .crossfader {
   width: 200px;
-  height: 8px;
-  background: linear-gradient(90deg, #ff6b6b, #4ecdc4);
-  border-radius: 4px;
+  height: 6px;
+  background: linear-gradient(90deg, #ff4757, #00ff88);
+  border-radius: 3px;
   outline: none;
   margin-bottom: 0.5rem;
+  box-shadow: 0 2px 8px rgba(0, 255, 136, 0.3);
 }
 
 .crossfader::-webkit-slider-thumb {
@@ -377,10 +383,11 @@ export default {
 
 .bpm-value {
   display: block;
-  color: #4ecdc4;
+  color: #00ff88;
   font-family: 'Orbitron', monospace;
   font-size: 1.5rem;
   font-weight: bold;
+  text-shadow: 0 0 10px rgba(0, 255, 136, 0.5);
 }
 
 .decks-section {
@@ -391,18 +398,22 @@ export default {
 }
 
 .deck-a {
-  border-left: 4px solid #ff6b6b;
+  border-left: 3px solid #ff4757;
+  box-shadow: -3px 0 15px rgba(255, 71, 87, 0.3);
 }
 
 .deck-b {
-  border-left: 4px solid #4ecdc4;
+  border-left: 3px solid #00ff88;
+  box-shadow: -3px 0 15px rgba(0, 255, 136, 0.3);
 }
 
 .visualizer-section {
   height: 200px;
-  background: rgba(0, 0, 0, 0.7);
-  border-radius: 10px;
+  background: linear-gradient(135deg, #0a0a0a, #1a1a1a);
+  border-radius: 8px;
   overflow: hidden;
+  border: 1px solid #333;
+  box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.8);
 }
 
 .visualizer-canvas {

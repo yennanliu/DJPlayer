@@ -460,11 +460,13 @@ export default {
 
 <style scoped>
 .deck-control {
-  background: linear-gradient(145deg, #1a202c, #2d3748);
-  border-radius: 15px;
+  background: linear-gradient(145deg, #0d1117, #1a1a1a);
+  border-radius: 8px;
   padding: 1.5rem;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 
+    0 4px 20px rgba(0, 0, 0, 0.6),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  border: 1px solid #333;
 }
 
 .deck-header {
@@ -491,8 +493,8 @@ export default {
 }
 
 .deck-indicator.active {
-  background: #4ecdc4;
-  box-shadow: 0 0 10px #4ecdc4;
+  background: #00ff88;
+  box-shadow: 0 0 15px rgba(0, 255, 136, 0.8);
 }
 
 .file-section {
@@ -501,15 +503,17 @@ export default {
 
 .file-button {
   display: inline-block;
-  background: linear-gradient(45deg, #667eea, #764ba2);
-  color: white;
-  padding: 0.5rem 1rem;
-  border-radius: 8px;
+  background: linear-gradient(45deg, #00ff88, #00d4aa);
+  color: #000;
+  padding: 0.75rem 1.5rem;
+  border-radius: 6px;
   cursor: pointer;
   font-size: 0.9rem;
-  font-weight: 500;
+  font-weight: 600;
   transition: all 0.3s ease;
   border: none;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
 .file-button:hover {
@@ -557,7 +561,9 @@ export default {
 }
 
 .play-button.playing {
-  background: #4ecdc4;
+  background: #00ff88;
+  color: #000;
+  box-shadow: 0 0 20px rgba(0, 255, 136, 0.6);
 }
 
 .play-button:disabled,
@@ -589,9 +595,10 @@ export default {
 
 .progress-fill {
   height: 100%;
-  background: linear-gradient(90deg, #ff6b6b, #4ecdc4);
+  background: linear-gradient(90deg, #ff4757, #00ff88);
   border-radius: 3px;
   transition: width 0.1s ease;
+  box-shadow: 0 0 10px rgba(0, 255, 136, 0.4);
 }
 
 .progress-handle {
@@ -694,11 +701,12 @@ export default {
 }
 
 .tempo-display {
-  color: #4ecdc4;
+  color: #00ff88;
   font-family: 'Orbitron', monospace;
   font-weight: bold;
   min-width: 50px;
   text-align: center;
+  text-shadow: 0 0 10px rgba(0, 255, 136, 0.5);
 }
 
 .tempo-slider {

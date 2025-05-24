@@ -6,8 +6,8 @@
     </header>
     
     <main class="main-content">
-      <SampleTracks @track-generated="onTrackGenerated" />
       <DJPlayer />
+      <SampleTracks @track-generated="onTrackGenerated" />
     </main>
     
     <footer class="footer">
@@ -37,37 +37,48 @@ export default {
 
 <style>
 .header {
+  background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
   text-align: center;
-  padding: 2rem 0;
+  padding: 1.5rem 0;
   color: white;
-  text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+  border-bottom: 2px solid #00ff88;
+  box-shadow: 0 4px 20px rgba(0, 255, 136, 0.2);
 }
 
 .title {
   font-family: 'Orbitron', monospace;
-  font-size: 3rem;
+  font-size: 2.5rem;
   font-weight: 900;
   margin-bottom: 0.5rem;
-  letter-spacing: 2px;
+  letter-spacing: 3px;
+  background: linear-gradient(45deg, #00ff88, #00d4aa);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: none;
 }
 
 .subtitle {
-  font-size: 1.2rem;
-  opacity: 0.9;
+  font-size: 1rem;
+  opacity: 0.8;
   font-weight: 300;
+  color: #cccccc;
 }
 
 .main-content {
-  max-width: 1200px;
+  max-width: 1400px;
   margin: 0 auto;
-  padding: 0 2rem;
+  padding: 0 1rem;
+  background: #0f0f0f;
+  min-height: calc(100vh - 200px);
 }
 
 .footer {
+  background: #1a1a1a;
   text-align: center;
-  padding: 2rem 0;
-  color: white;
-  opacity: 0.7;
-  font-size: 0.9rem;
+  padding: 1rem 0;
+  color: #666;
+  font-size: 0.8rem;
+  border-top: 1px solid #333;
 }
 </style> 
