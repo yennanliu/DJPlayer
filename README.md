@@ -28,6 +28,13 @@ A modern, feature-rich DJ Player built with Vue 2 that allows you to mix tracks 
 - **Dual Display**: Separate visualization for each deck
 - **Color-coded**: Deck A (red) and Deck B (teal) for easy identification
 
+### 🎙️ Mix Recording & Download
+- **Live Recording**: Record your DJ mix in real-time
+- **High Quality**: Multiple quality options (128kbps, 192kbps, 320kbps)
+- **Pause/Resume**: Pause and resume recording during your mix
+- **Instant Download**: Download your recorded mix as WebM audio file
+- **Mix Monitoring**: Real-time recording duration and file size display
+
 ### 🎨 Modern UI/UX
 - **Responsive Design**: Works on desktop, tablet, and mobile devices
 - **Dark Theme**: Professional DJ-style dark interface
@@ -110,6 +117,36 @@ A modern, feature-rich DJ Player built with Vue 2 that allows you to mix tracks 
 #### Progress Navigation
 - Click anywhere on the progress bar to seek to that position
 - Visual handle shows current playback position
+
+### 🎙️ Recording Your Mix
+
+#### Starting a Recording
+1. **Load Tracks**: First, load audio tracks into both decks
+2. **Start Playing**: Begin playback on one or both decks
+3. **Set Quality**: Choose recording quality from the dropdown (High/Medium/Low)
+4. **Hit Record**: Click the ⏺️ record button to start capturing your mix
+5. **Monitor**: Watch the recording timer and status indicator
+
+#### During Recording
+- **Mix Freely**: Use all DJ controls (crossfader, volume, EQ, tempo, etc.)
+- **Pause Recording**: Use ⏸️ to pause recording if needed
+- **Resume Recording**: Click ⏸️ again to resume from where you left off
+- **Real-time Info**: Monitor recording duration and file size
+
+#### Completing Your Mix
+1. **Stop Recording**: Click the ⏹️ stop button when finished
+2. **Review Info**: Check the recording duration, file size, and format
+3. **Download**: Click "📥 Download" to save your mix
+4. **Automatic Naming**: Files are automatically named with timestamp (e.g., "DJ-Mix-20241213T143022.webm")
+
+#### Recording Tips
+- **Test Your Levels**: Make sure audio is playing before recording
+- **Choose Quality Wisely**: 
+  - High (320kbps): Best quality, larger file size
+  - Medium (192kbps): Good balance of quality and size
+  - Low (128kbps): Smaller file, suitable for demos
+- **Browser Support**: WebM format is supported by most modern browsers
+- **File Conversion**: Use tools like Audacity or online converters to convert to MP3 if needed
 
 ## 🛠️ Technical Details
 

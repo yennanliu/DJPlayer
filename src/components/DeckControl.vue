@@ -244,9 +244,9 @@ export default {
         this.analyserNode.fftSize = 256
         this.analyserNode.smoothingTimeConstant = 0.8
         
-        // Connect audio graph: analyser -> gain -> destination
+        // Connect audio graph: analyser -> gain (output will be connected to mixer)
         this.analyserNode.connect(this.gainNode)
-        this.gainNode.connect(this.audioContext.destination)
+        // Note: gainNode output will be connected to mixer in parent component
         
         this.updateVolumeNode()
       } catch (error) {
@@ -288,7 +288,8 @@ export default {
         this.$emit('file-loaded', {
           name: file.name,
           duration: this.audioElement.duration,
-          analyser: this.analyserNode
+          analyser: this.analyserNode,
+          outputNode: this.gainNode
         })
         this.isLoading = false
       })

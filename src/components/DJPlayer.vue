@@ -1,5 +1,14 @@
 <template>
   <div class="dj-player">
+    <!-- Mix Recorder -->
+    <MixRecorder 
+      :audio-context="audioContext"
+      :mixer-output-node="mixerOutputNode"
+      @recording-started="onRecordingStarted"
+      @recording-stopped="onRecordingStopped"
+      @mix-downloaded="onMixDownloaded"
+    />
+
     <!-- DJ Mixer Section -->
     <div class="mixer-section">
       <div class="mixer-panel">
@@ -95,11 +104,13 @@
 
 <script>
 import DeckControl from './DeckControl.vue'
+import MixRecorder from './MixRecorder.vue'
 
 export default {
   name: 'DJPlayer',
   components: {
-    DeckControl
+    DeckControl,
+    MixRecorder
   },
   data() {
     return {
@@ -127,7 +138,13 @@ export default {
       // Visualizer
       analyserA: null,
       analyserB: null,
-      animationId: null
+      animationId: null,
+
+      // Mixer output for recording
+      mixerOutputNode: null,
+      masterGainNode: null,
+      crossfaderGainA: null,
+      crossfaderGainB: null
     }
   },
   mounted() {
@@ -146,8 +163,37 @@ export default {
     initializeAudioContext() {
       try {
         this.audioContext = new (window.AudioContext || window.webkitAudioContext)()
+        this.setupMixerNodes()
       } catch (error) {
         console.error('Web Audio API not supported:', error)
+      }
+    },
+
+    setupMixerNodes() {
+      if (!this.audioContext) return
+
+      try {
+        // Create mixer nodes
+        this.masterGainNode = this.audioContext.createGain()
+        this.crossfaderGainA = this.audioContext.createGain()
+        this.crossfaderGainB = this.audioContext.createGain()
+        this.mixerOutputNode = this.audioContext.createGain()
+
+        // Connect crossfader gains to mixer output
+        this.crossfaderGainA.connect(this.mixerOutputNode)
+        this.crossfaderGainB.connect(this.mixerOutputNode)
+
+        // Connect mixer output to master gain
+        this.mixerOutputNode.connect(this.masterGainNode)
+
+        // Connect master gain to speakers
+        this.masterGainNode.connect(this.audioContext.destination)
+
+        // Set initial values
+        this.updateMasterVolume()
+        this.updateCrossfader()
+      } catch (error) {
+        console.error('Error setting up mixer nodes:', error)
       }
     },
 
@@ -211,11 +257,22 @@ export default {
     },
 
     updateCrossfader() {
-      // Crossfader logic will be handled in DeckControl components
+      if (!this.crossfaderGainA || !this.crossfaderGainB) return
+
+      // Convert crossfader position (0-100) to gain values
+      const position = this.crossfader / 100
+      
+      // Equal power crossfading
+      const gainA = Math.cos(position * Math.PI / 2)
+      const gainB = Math.sin(position * Math.PI / 2)
+      
+      this.crossfaderGainA.gain.value = gainA
+      this.crossfaderGainB.gain.value = gainB
     },
 
     updateMasterVolume() {
-      // Master volume logic
+      if (!this.masterGainNode) return
+      this.masterGainNode.gain.value = this.masterVolume / 100
     },
 
     handleFileLoaded(deckId, data) {
@@ -223,10 +280,26 @@ export default {
         this.deckATrackName = data.name
         this.deckADuration = data.duration
         this.analyserA = data.analyser
+        
+        // Connect deck A to crossfader
+        if (data.outputNode && this.crossfaderGainA) {
+          data.outputNode.connect(this.crossfaderGainA)
+        } else if (data.outputNode) {
+          // Fallback: connect directly to destination if mixer not ready
+          data.outputNode.connect(this.audioContext.destination)
+        }
       } else {
         this.deckBTrackName = data.name
         this.deckBDuration = data.duration
         this.analyserB = data.analyser
+        
+        // Connect deck B to crossfader
+        if (data.outputNode && this.crossfaderGainB) {
+          data.outputNode.connect(this.crossfaderGainB)
+        } else if (data.outputNode) {
+          // Fallback: connect directly to destination if mixer not ready
+          data.outputNode.connect(this.audioContext.destination)
+        }
       }
     },
 
@@ -250,6 +323,19 @@ export default {
       const mins = Math.floor(seconds / 60)
       const secs = Math.floor(seconds % 60)
       return `${mins}:${secs.toString().padStart(2, '0')}`
+    },
+
+    // Recording event handlers
+    onRecordingStarted() {
+      console.log('Recording started')
+    },
+
+    onRecordingStopped() {
+      console.log('Recording stopped')
+    },
+
+    onMixDownloaded(data) {
+      console.log('Mix downloaded:', data)
     }
   }
 }
